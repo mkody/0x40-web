@@ -28,7 +28,7 @@
     underneath so it can be entirely hidden.
 */
 class HuesUI {
-    
+
     constructor(parent, name) {
         if(!parent) {
             return;
@@ -60,7 +60,7 @@ class HuesUI {
 
         this.settingsToggle = null;
         this.hideToggle = null;
-        
+
         // To deregister on UI hide we need to keep track of these
         // Each callback is { name : "callbackname", func : function }
         // Add using this.addCoreCallback
@@ -362,10 +362,10 @@ class RetroUI extends HuesUI {
 
         this.listContainer.className = "hues-r-listcontainer";
         this.root.appendChild(this.listContainer);
-        
+
         this.visualiserContainer.className = "hues-r-visualisercontainer";
         this.root.appendChild(this.visualiserContainer);
-        
+
         this.addCoreCallback("beat", this.beat.bind(this));
         this.addCoreCallback("newmode", this.newMode.bind(this));
     }
@@ -429,7 +429,7 @@ class MinimalUI extends RetroUI {
 
     initUI() {
         super.initUI();
-        
+
         this.root.removeChild(this.controls);
         this.root.removeChild(this.subControls);
         this.container.removeChild(this.beatBar);
@@ -471,7 +471,7 @@ class WeedUI extends RetroUI {
 
         this.imageModeManual.textContent = "ONE";
         this.imageModeAuto.textContent = "MANY";
-        
+
         this.visualiserContainer.className += " hues-w-visualisercontainer";
     }
 
@@ -489,7 +489,7 @@ class WeedUI extends RetroUI {
 
         this.beatLeft.textContent = rest;
         this.beatRight.textContent = rest;
-        
+
         this.beatCount.textContent = "B=" + this.intToHex(index, 4);
 
         if(["x", "o", "X", "O"].indexOf(beats[0]) != -1) {
@@ -520,7 +520,7 @@ class WeedUI extends RetroUI {
 class ModernUI extends HuesUI {
     constructor(parent, name) {
         super(parent, name ? name : "ModernUI");
-        
+
         this.textSize_normal = 0;
         this.textSize_small = 0;
         this.songLink_size = 0;
@@ -655,7 +655,7 @@ class ModernUI extends HuesUI {
         this.leftInfo = leftInfo;
         controls.appendChild(leftInfo);
         controls.appendChild(rightInfo);
-        
+
         this.visualiserContainer.className = "hues-m-visualisercontainer";
         controls.appendChild(this.visualiserContainer);
 
@@ -688,7 +688,7 @@ class ModernUI extends HuesUI {
 
         this.listContainer.className = "hues-m-listcontainer";
         this.root.appendChild(this.listContainer);
-        
+
         this.addCoreCallback("beat", this.beat.bind(this));
         this.addCoreCallback("newmode", this.newMode.bind(this));
     }
@@ -762,9 +762,9 @@ class ModernUI extends HuesUI {
         // We override this just after so don't bother to restore it
         el.className = className;
         let size = el.offsetWidth / 100;
-        
+
         el.innerHTML = oldContent;
-        
+
         return size;
     }
 
@@ -824,10 +824,10 @@ class XmasUI extends ModernUI {
     constructor(parent, name) {
         super(parent, name ? name : "XmasUI");
         this.initSnow();
-        
-         // This will cache our inverted lights images
+
+        // This will cache our inverted lights images
         this.invert(true);
-        
+
         this.controls.removeChild(this.leftBox);
         this.controls.removeChild(this.rightBox);
         this.controls.removeChild(this.rightInfo);
@@ -850,7 +850,7 @@ class XmasUI extends ModernUI {
 
         let left = document.createElement("div");
         left.className = "hues-x-wiresleft";
-        xleft.forEach(function(l, i, a) {
+        xleft.forEach(function (l, i, a) {
             let light = this.newLight(l, left);
             light.style.transform = "rotate(" + l.angle + "deg)";
             light.style.left = l.x + "px";
@@ -860,7 +860,7 @@ class XmasUI extends ModernUI {
 
         let right = document.createElement("div");
         right.className = "hues-x-wiresright";
-        xright.forEach(function(l, i, a) {
+        xright.forEach(function (l, i, a) {
             let light = this.newLight(l, right);
             light.style.transform = "rotate(" + (-l.angle) + "deg)";
             light.style.right = l.x + "px";
@@ -872,7 +872,7 @@ class XmasUI extends ModernUI {
         bottomHelper.className = "hues-x-wiresbottomhelper";
         let bottom = document.createElement("div");
         bottom.className = "hues-x-wiresbottom";
-        xbottom.forEach(function(l, i, a) {
+        xbottom.forEach(function (l, i, a) {
             let light = this.newLight(l, bottom);
             light.style.transform = "rotate(" + l.angle + "deg)";
             light.style.left = l.x + "px";
@@ -885,16 +885,16 @@ class XmasUI extends ModernUI {
         bottomHelper.appendChild(bottom);
         wires.appendChild(bottomHelper);
         this.root.appendChild(wires);
-        
+
         this.visualiserContainer.className = "hues-x-visualisercontainer";
         this.controls.removeChild(this.visualiserContainer);
         this.beatBar.appendChild(this.visualiserContainer);
     }
-    
+
     invert(invert) {
         super.invert(invert);
-        
-        if(invert) {
+
+        if (invert) {
             this.snowContext.fillStyle = "rgba(0, 0, 0, 0.8)";
         } else {
             this.snowContext.fillStyle = "rgba(255, 255, 255, 0.8)";
@@ -933,7 +933,7 @@ class XmasUI extends ModernUI {
     }
 
     randomLight(light) {
-        if(Math.random() >= 0.5) {
+        if (Math.random() >= 0.5) {
             this.lightOn(light);
         } else {
             this.lightOff(light);
@@ -960,14 +960,14 @@ class XmasUI extends ModernUI {
 
     beat(beats, index) {
         super.beat(beats, index);
-        if(this.currentBeat != ".") {
-            this.lights.forEach(function(light, i, a) {
-                switch(this.currentBeat) {
-                    case ":": 
+        if (this.currentBeat != ".") {
+            this.lights.forEach(function (light, i, a) {
+                switch (this.currentBeat) {
+                    case ":":
                         this.lightOn(light);
                         this.lightRecolour(light);
                         break;
-                    case "+": 
+                    case "+":
                         this.lightFadeOut(light);
                         break;
                     default:
@@ -984,7 +984,7 @@ class XmasUI extends ModernUI {
         this.snowCanvas.height = 720;
         this.snowCanvas.style.display = "none";
         this.snowCanvas.className = "hues-canvas hues-x-snow";
-        
+
         this.root.appendChild(this.snowCanvas);
 
         this.snowing = false;
@@ -992,7 +992,7 @@ class XmasUI extends ModernUI {
         this.snowAngle = 0;
         this.lastSnow = 0;
         this.snowflakes = [];
-        
+
         this.addCoreCallback("frame", this.drawSnow.bind(this));
     }
 
@@ -1005,12 +1005,12 @@ class XmasUI extends ModernUI {
         let width = this.snowCanvas.width;
         this.snowAngle = 0;
         this.snowflakes = [];
-        for(let i = 0; i < this.maxSnow; i++) {
+        for (let i = 0; i < this.maxSnow; i++) {
             this.snowflakes.push({
-                x: Math.random()*width, //x-coordinate
-                y: Math.random()*height, //y-coordinate
-                r: Math.random()*4+1, //radius
-                d: Math.random()*25 //density
+                x: Math.random() * width, //x-coordinate
+                y: Math.random() * height, //y-coordinate
+                r: Math.random() * 4 + 1, //radius
+                d: Math.random() * 25 //density
             });
         }
         this.lastSnow = Date.now() / 1000;
@@ -1030,7 +1030,7 @@ class XmasUI extends ModernUI {
         this.snowContext.clearRect(0, 0, width, height);
 
         this.snowContext.beginPath();
-        for(let i = 0; i < this.maxSnow; i++) {
+        for (let i = 0; i < this.maxSnow; i++) {
             let flake = this.snowflakes[i];
             this.snowContext.moveTo(flake.x, flake.y);
             this.snowContext.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2, true);
@@ -1038,7 +1038,7 @@ class XmasUI extends ModernUI {
         this.snowContext.fill();
 
         this.snowAngle += delta / 6;
-        for(let i = 0; i < this.maxSnow; i++) {
+        for (let i = 0; i < this.maxSnow; i++) {
             let flake = this.snowflakes[i];
             //Updating X and Y coordinates
             //We will add 1 to the cos function to prevent negative values which will lead flakes to move upwards
@@ -1049,19 +1049,32 @@ class XmasUI extends ModernUI {
 
             //Sending flakes back from the top when it exits
             //Lets make it a bit more organic and let flakes enter from the left and right also.
-            if(flake.x > width + 5 || flake.x < -5 || flake.y > height) {
-                if(i % 3 > 0) {//66.67% of the flakes
-                    this.snowflakes[i] = {x: Math.random() * width, y: -10, r: flake.r, d: flake.d};
-                }
-                else {
+            if (flake.x > width + 5 || flake.x < -5 || flake.y > height) {
+                if (i % 3 > 0) { //66.67% of the flakes
+                    this.snowflakes[i] = {
+                        x: Math.random() * width,
+                        y: -10,
+                        r: flake.r,
+                        d: flake.d
+                    };
+                } else {
                     //If the flake is exitting from the right
-                    if(Math.sin(this.snowAngle) > 0) {
+                    if (Math.sin(this.snowAngle) > 0) {
                         //Enter from the left
-                        this.snowflakes[i] = {x: -5, y: Math.random() * height, r: flake.r, d: flake.d};
-                    }
-                    else {
+                        this.snowflakes[i] = {
+                            x: -5,
+                            y: Math.random() * height,
+                            r: flake.r,
+                            d: flake.d
+                        };
+                    } else {
                         //Enter from the right
-                        this.snowflakes[i] = {x: width+5, y: Math.random() * height, r: flake.r, d: flake.d};
+                        this.snowflakes[i] = {
+                            x: width + 5,
+                            y: Math.random() * height,
+                            r: flake.r,
+                            d: flake.d
+                        };
                     }
                 }
             }
@@ -1070,12 +1083,41 @@ class XmasUI extends ModernUI {
 
     resize() {
         super.resize();
-        
+
         let ratio = window.innerWidth / window.innerHeight;
         // cleared on resize
         let savedFill = this.snowContext.fillStyle;
         this.snowCanvas.width = Math.ceil(720 * ratio);
         this.snowContext.fillStyle = savedFill;
+    }
+
+    newColour(colour) {}
+    blurUpdated(x, y) {}
+    updateTime(time) {}
+}
+
+class CleanUI extends ModernUI {
+    constructor(parent, name) {
+        super(parent, name ? name : "CleanUI");
+
+        this.controls.removeChild(this.leftBox);
+        this.controls.removeChild(this.rightBox);
+        this.controls.removeChild(this.rightInfo);
+        this.controls.removeChild(this.leftInfo);
+
+        this.leftBox = null;
+        this.rightBox = null;
+        this.hueName = null;
+        this.xBlur = null;
+        this.yBlur = null;
+        this.timer = null;
+
+        this.controls.className += " hues-x-controls";
+        this.beatBar.className += " hues-x-beatbar";
+
+        this.visualiserContainer.className = "hues-x-visualisercontainer";
+        this.controls.removeChild(this.visualiserContainer);
+        this.beatBar.appendChild(this.visualiserContainer);
     }
 
     newColour(colour) {}
@@ -1092,13 +1134,13 @@ class HalloweenUI extends ModernUI {
 
     initUI() {
         super.initUI();
-        
+
         this.controls.className += " hues-h-controls";
         this.beatBar.className += " hues-h-beatbar";
         this.leftBox.className += " hues-h-leftbox";
         this.rightBox.className += " hues-h-rightbox";
         this.volBar.className += " hues-h-vol-bar";
-        
+
         this.beatLeft.className += " hues-h-text";
         this.beatRight.className += " hues-h-text";
         this.beatCenter.className += " hues-h-text";
@@ -1113,47 +1155,47 @@ class HalloweenUI extends ModernUI {
         this.imageList.className += " hues-h-text";
         this.imageName.className += " hues-h-text";
         this.hueName.className += " hues-h-text";
-        
+
         this.settingsToggle.className += " hues-h-text";
         this.hideToggle.className += " hues-h-text";
         this.infoToggle.className += " hues-h-text";
         this.volLabel.className += " hues-h-text";
-        
+
         this.timer.className = "hues-h-textfade";
         this.beatCount.className = "hues-h-textfade";
         this.xBlur.className = "hues-h-textfade";
         this.yBlur.className = "hues-h-textfade";
-        
+
         let leftBoxTomb = document.createElement("div");
         leftBoxTomb.className = "hues-h-tombstone";
         this.leftBox.appendChild(leftBoxTomb);
-        
+
         let songTomb = document.createElement("div");
         songTomb.className = "hues-h-tombstone";
         this.songBlock.insertBefore(songTomb,this.songBlock.firstChild);
-        
+
         let imageTomb = document.createElement("div");
         imageTomb.className = "hues-h-tombstone";
         this.imageBlock.insertBefore(imageTomb,this.imageBlock.firstChild);
-        
+
         let topLeft = document.createElement("div");
         topLeft.className = "hues-h-topleft";
         let topRight = document.createElement("div");
         topRight.className = "hues-h-topright";
         let bottomRight = document.createElement("div");
         bottomRight.className = "hues-h-bottomright";
-        
+
         this.root.appendChild(topLeft);
         this.root.appendChild(topRight);
         this.root.appendChild(bottomRight);
-        
+
         let leftHand = document.createElement("div");
         leftHand.className = "hues-h-left-hand";
         this.beatBar.appendChild(leftHand);
         let rightHand = document.createElement("div");
         rightHand.className = "hues-h-right-hand";
         this.beatBar.appendChild(rightHand);
-        
+
         this.vignette = document.createElement("div");
         this.vignette.className = "hues-h-vignette";
         this.root.appendChild(this.vignette);
@@ -1161,7 +1203,7 @@ class HalloweenUI extends ModernUI {
 
     beat(beats, index) {
         super.beat(beats, index);
-        
+
         if (this.currentBeat != ".") {
             let eyes = this.beatCenter.ownerDocument.createElement("div");
             eyes.className = "hues-m-beatcenter hues-h-eyes";
@@ -1171,13 +1213,13 @@ class HalloweenUI extends ModernUI {
 
     connectCore(core) {
         super.connectCore(core);
-        
+
         this.core.preloader.classList.add("hues-h-text");
     }
 
     disconnect() {
         this.core.preloader.classList.remove("hues-h-text");
-        
+
         super.disconnect();
     }
 }
@@ -1265,5 +1307,6 @@ window.ModernUI = ModernUI;
 window.XmasUI = XmasUI;
 window.HalloweenUI = HalloweenUI;
 window.MinimalUI = MinimalUI;
+window.CleanUI = CleanUI;
 
 })(window, document);
