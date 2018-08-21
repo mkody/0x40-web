@@ -894,7 +894,7 @@ class XmasUI extends ModernUI {
     invert(invert) {
         super.invert(invert);
 
-        if (invert) {
+        if(invert) {
             this.snowContext.fillStyle = "rgba(0, 0, 0, 0.8)";
         } else {
             this.snowContext.fillStyle = "rgba(255, 255, 255, 0.8)";
@@ -960,9 +960,9 @@ class XmasUI extends ModernUI {
 
     beat(beats, index) {
         super.beat(beats, index);
-        if (this.currentBeat != ".") {
-            this.lights.forEach(function (light, i, a) {
-                switch (this.currentBeat) {
+        if(this.currentBeat != ".") {
+            this.lights.forEach(function(light, i, a) {
+                switch(this.currentBeat) {
                     case ":":
                         this.lightOn(light);
                         this.lightRecolour(light);

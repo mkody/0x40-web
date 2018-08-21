@@ -31,9 +31,6 @@ let getAndIncrementUnique = function() {
     return unique++;
 };
 
-// NOTE: Any packs referenced need CORS enabled or loads fail
-let packsURL = "https://cdn.0x40.ga/getRespacks.php";
-
 class Resources {
     constructor(core, huesWin) {
         this.core = core;
@@ -92,7 +89,7 @@ class Resources {
        Returns an Promise.all which will resolve to an array of sizes */
     getSizes(urls) {
         let promises = [];
-        
+
         urls.forEach(url => {
             let p = new Promise((resolve, reject) => {
                 let xhr = new XMLHttpRequest();
@@ -117,7 +114,7 @@ class Resources {
             });
             promises.push(p);
         });
-        
+
         return Promise.all(promises);
     }
 
@@ -128,14 +125,14 @@ class Resources {
             this.progressCallback = progressCallback;
             this.progressState = Array.apply(null, Array(urls.length)).map(Number.prototype.valueOf,0);
         }
-        
+
         let respackPromises = [];
-        
+
         let progressFunc = function(index, progress, pack) {
                 this.progressState[index] = progress;
                 this.updateProgress(pack);
         };
-        
+
         for(let i = 0; i < urls.length; i++) {
             let r = new Respack();
             respackPromises.push(r.loadFromURL(urls[i], progressFunc.bind(this, i)));
@@ -266,7 +263,7 @@ class Resources {
 
     loadLocal() {
         console.log("Loading local zip(s)");
-        
+
         let files = this.fileInput.files;
         let p = Promise.resolve();
         for(let i = 0; i < files.length; i++) {
@@ -310,7 +307,7 @@ class Resources {
     initUI() {
         this.root = document.createElement("div");
         this.root.className = "respacks";
-        
+
         let packsContainer = document.createElement("div");
         packsContainer.className = "respacks__manager";
 
@@ -415,10 +412,10 @@ class Resources {
         let packDesc = document.createElement("div");
         packDesc.className = "respack-description";
         packDesc.textContent = "<no description>";
-        
+
         let tabContainer = document.createElement("div");
         tabContainer.className = "respack-tab-container";
-        
+
         let songCount = document.createElement("div");
         songCount.textContent = "Songs:";
         songCount.className = "respack-tab respack-tab--checked";
@@ -431,24 +428,24 @@ class Resources {
         songList.className = "resource-list respack-tab__content respack-tab__content--checked";
         let imageList = document.createElement("div");
         imageList.className = "resource-list respack-tab__content";
-        
+
         songCount.onclick = () => {
             songCount.classList.add("respack-tab--checked");
             imageCount.classList.remove("respack-tab--checked");
-            
+
             songList.classList.add("respack-tab__content--checked");
             imageList.classList.remove("respack-tab__content--checked");
-            
+
             this.currentTab = TAB_SONGS;
         };
-        
+
         imageCount.onclick = () => {
             imageCount.classList.add("respack-tab--checked");
             songCount.classList.remove("respack-tab--checked");
-            
+
             imageList.classList.add("respack-tab__content--checked");
             songList.classList.remove("respack-tab__content--checked");
-            
+
             this.currentTab = TAB_IMAGES;
         };
 
@@ -509,13 +506,13 @@ class Resources {
         indivView.appendChild(packName);
         indivView.appendChild(packInfo);
         indivView.appendChild(packDesc);
-        
+
         tabContainer.appendChild(songCount);
         tabContainer.appendChild(imageCount);
         indivView.appendChild(tabContainer);
         indivView.appendChild(songList);
         indivView.appendChild(imageList);
-        
+
         indivView.appendChild(packButtons);
         indivView.appendChild(totalCounts);
 
@@ -530,7 +527,7 @@ class Resources {
 
         this.listView.appendChild(this.enabledSongList);
         this.listView.appendChild(this.enabledImageList);
-        
+
         this.hasUI = true;
     }
 
@@ -719,7 +716,7 @@ class Resources {
         let item = this.appendSimpleListItem("Loading...", remoteList);
 
         let req = new XMLHttpRequest();
-        req.open('GET', packsURL, true);
+        req.open('GET', this.core.settings.packsURL, true);
         req.responseType = 'json';
         req.onload = () => {
             if(!req.response) {

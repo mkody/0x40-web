@@ -109,7 +109,7 @@ class HuesCore {
         };
 
         // Bunch-o-initialisers
-        this.version = 33;
+        this.version = 34;
         this.versionStr = (this.version/10).toFixed(1);
         this.versionHex = this.version.toString(16);
         this.beatIndex = 0;
@@ -181,7 +181,7 @@ class HuesCore {
         ui.className = "hues-ui";
         this.root.appendChild(ui);
         this.uiArray.push(new RetroUI(ui), new WeedUI(ui), new ModernUI(ui),
-                          new XmasUI(ui), new HalloweenUI(ui), new MinimalUI(ui),
+                          new XmasUI(ui), new HalloweenUI(ui),new MinimalUI(ui),
                           new CleanUI(ui));
 
         this.autoSong = this.settings.autoSong;
